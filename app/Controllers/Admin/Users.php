@@ -42,7 +42,7 @@ class Users extends BaseController
 
             $return[] = $data;
         }
-        
+
         return $this->response->setJSON($return);
     }
 }
