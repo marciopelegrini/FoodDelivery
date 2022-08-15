@@ -26,6 +26,7 @@ class CreateUserTable extends Migration
             'driver_licence' => [
                 'type' => 'VARCHAR',
                 'constraint' => '15',
+                'null' => true,
             ],
             'telephone' => [
                 'type' => 'VARCHAR',
@@ -47,11 +48,15 @@ class CreateUserTable extends Migration
             ],
             'activation_hash' => [
                 'type' => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => '64',
+                'null' => true,
+                'unique' => true,
             ],
             'reset_hash' => [
                 'type' => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => '64',
+                'null' => true,
+                'unique' => true,
             ],
             'reset_expiry_in' => [
                 'type' => 'DATETIME',
@@ -63,7 +68,7 @@ class CreateUserTable extends Migration
                 'null' => true,
                 'default' => null,
             ],
-            'modified_at' => [
+            'updated_at' => [
                 'type' => 'DATETIME',
                 'null' => true,
                 'default' => null,
@@ -76,12 +81,12 @@ class CreateUserTable extends Migration
 
         ]);
 
-        $this->forge->addKey('blog_id', true);
-        $this->forge->createTable('blog');
+        $this->forge->addPrimaryKey('id')->addUniqueKey('email');
+        $this->forge->createTable('users');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('users');
     }
 }
