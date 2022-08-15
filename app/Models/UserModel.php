@@ -32,5 +32,3 @@ class UserModel extends Model
             ->getResult();
     }
 }
-
-
