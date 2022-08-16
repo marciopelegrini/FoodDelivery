@@ -8,37 +8,37 @@ use App\Models\UserModel;
 class Users extends BaseController
 {
 
-    private $userModel;
+    private $usagerModel;
 
     public function __construct()
     {
-        $this->userModel = new UserModel();
+        $this->usagerModel = new UserModel();
     }
 
     public function index()
     {
         $data = [
-            'title' => 'Listing users',
-            'users' => $this->userModel->findAll(),
+            'titre' => 'Liste des usagers',
+            'users' => $this->usagerModel->findAll(),
         ];
 
         return view('Admin/Users/index', $data);
 
     }
 
-    public function find_user()
+    public function recherche_usager()
     {
         if (!$this->request->isAJAX()) {
-            exit('Page not found!');
+            exit('Page pas trouvé!');
         }
 
-        $users = $this->userModel->find_user($this->request->getGet('term'));
+        $users = $this->usagerModel->recherche_usager($this->request->getGet('term'));
 
         $return = [];
 
         foreach ($users as $user) {
             $data['id'] = $user->id;
-            $data['value'] = $user->name;
+            $data['value'] = $user->nom;
 
             $return[] = $data;
         }

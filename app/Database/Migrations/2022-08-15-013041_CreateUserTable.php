@@ -15,15 +15,15 @@ class CreateUserTable extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'name' => [
+            'nom' => [
                 'type' => 'VARCHAR',
                 'constraint' => '128',
             ],
-            'email' => [
+            'courriel' => [
                 'type' => 'VARCHAR',
                 'constraint' => '128',
             ],
-            'driver_licence' => [
+            'assurance_maladie' => [
                 'type' => 'VARCHAR',
                 'constraint' => '15',
                 'null' => true,
@@ -37,7 +37,7 @@ class CreateUserTable extends Migration
                 'null' => false,
                 'default' => false,
             ],
-            'active' => [
+            'actif' => [
                 'type' => 'BOOLEAN',
                 'null' => false,
                 'default' => false,
@@ -81,12 +81,12 @@ class CreateUserTable extends Migration
 
         ]);
 
-        $this->forge->addPrimaryKey('id')->addUniqueKey('email');
-        $this->forge->createTable('users');
+        $this->forge->addPrimaryKey('id')->addUniqueKey('courriel');
+        $this->forge->createTable('usagers');
     }
 
     public function down()
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('usagers');
     }
 }

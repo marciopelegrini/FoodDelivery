@@ -1,5 +1,5 @@
-<?php echo $this->extend('Admin/layout/main'); ?>
-<?php echo $this->section('title') ?> <?= $title ?> <?php echo $this->endSection() ?>
+<?php echo $this->extend('Admin/layout/principal'); ?>
+<?php echo $this->section('title') ?> <?= $titre ?> <?php echo $this->endSection() ?>
 
 <?php echo $this->section('styles') ?>
 <!-- Here we send the styles personnalized -->
@@ -17,28 +17,28 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title"><?= $title ?></h4>
+                        <h4 class="card-title"><?= $titre ?></h4>
 
                         <div class="ui-widget">
-                            <input id="query" name="query" class="form-control bg-light mb-5">
+                            <input id="query" name="query" placeholder="Recherche des usagers" class="form-control bg-light mb-5">
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>User Name</th>
-                                    <th>E-mail</th>
-                                    <th>Driver's Licence</th>
+                                    <th>Nom d'usager</th>
+                                    <th>Courriel</th>
+                                    <th>Permis de conduire</th>
                                     <th>Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($users as $user): ?>
                                     <tr>
-                                        <td><?= $user->name ?></td>
-                                        <td><?= $user->email ?></td>
-                                        <td><?= $user->driver_licence ?></td>
-                                        <td><?= ($user->active ? '<label class="badge badge-success">Active</label>' : '<label class="badge badge-danger">Pending</label>') ?></td>
+                                        <td><?= $user->nom ?></td>
+                                        <td><?= $user->courriel ?></td>
+                                        <td><?= $user->assurance_maladie ?></td>
+                                        <td><?= ($user->actif ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-danger">Attente</label>') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
@@ -75,7 +75,7 @@
         $("#query").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "<?php echo site_url('admin/users/find_user'); ?>",
+                    url: "<?php echo site_url('admin/users/recherche_usager'); ?>",
                     dataType: "json",
                     data: {
                         term: request.term
