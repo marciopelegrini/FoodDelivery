@@ -242,6 +242,44 @@
         <div class="main-panel">
             <div class="content-wrapper">
 
+                <!--  Contenu de flash Data (Alerts)  -->
+                <?php if (session()->has('success')): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Succès</strong> <?= session('success') ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->has('info')): ?>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Information</strong> <?= session('info') ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->has('warning')): ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Attention</strong> <?= session('warning') ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+
+
+                <?php if (session()->has('error')): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Erreur</strong> <?= session('error') ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                <?php endif; ?>
+
                 <!-- This section is used to render the main page-->
                 <?= $this->renderSection('content') ?>
 

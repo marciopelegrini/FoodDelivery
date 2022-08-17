@@ -55,6 +55,9 @@ class Users extends BaseController
         return $this->response->setJSON($return);
     }
 
+    /*
+     *
+     */
     public function show($id = null)
     {
         $usager = $this->chercheUsagerOr404($id);
@@ -65,6 +68,54 @@ class Users extends BaseController
         ];
 
         return view('Admin/Users/show', $data);
+    }
+
+    /*
+     *
+     */
+    public function editer($id = null)
+    {
+        $usager = $this->chercheUsagerOr404($id);
+
+        $data = [
+            'titre' => "Éditer l'usager : $usager->nom",
+            'usager' => $usager,
+        ];
+
+        return view('Admin/Users/editer', $data);
+    }
+
+    public function enregistrer($id = null)
+    {
+        if ($this->request->getMethod() === 'post') {
+            $usager = $this->chercheUsagerOr404($id);
+
+            $post = $this->request->getPost();
+
+            if (empty($post['mot-de-passe'])) {
+                $this->usagerModel->pasDeValidationMotDePasse();
+                unset($post['mot-de-passe']);
+                unset($post['confirm-mot-de-passe']);
+            }
+
+            $usager->fill($post);
+
+            if (!$usager->hasChanged()) {
+                return redirect()->back()->with('info', 'Il n\'y a pas de données à changé !');
+            }
+
+            if ($this->usagerModel->protect(false)->save($usager)) {
+                return redirect()->to(site_url("admin/users/show/$usager->id"))
+                    ->with('success', "Usager $usager->id a bien été changé !");
+            } else {
+                return redirect()->back()->with('errors_model', $this->usagerModel->errors())
+                    ->with('atention', "Veuillez corrigez les erreus !");
+            }
+
+        } else {
+            /* N'est pas post */
+            return redirect()->back();
+        }
     }
 
     private function chercheUsagerOr404(int $id = null)

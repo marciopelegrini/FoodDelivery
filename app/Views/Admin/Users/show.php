@@ -37,12 +37,24 @@
                         </p>
                         <p class="card-text">
                             <span class="font-weight-bold">Créé : </span>
-                            <?= $usager->created_at ?>
+                            <?= $usager->created_at->humanize() ?>
                         </p>
                         <p class="card-text">
                             <span class="font-weight-bold">Modifié : </span>
-                            <?= $usager->updated_at ?>
+                            <?= $usager->updated_at->humanize() ?>
                         </p>
+                        <div class="mt-4">
+                            <a href="<?= site_url("admin/users/editer/$usager->id"); ?>" class="btn btn-primary btn-sm mr-2">
+                                <i class="mdi mdi-pencil btn-icon-prepend"></i>Éditer
+                            </a>
+                            <a href="<?= site_url("admin/users/supprimer/$usager->id"); ?>" class="btn btn-danger btn-sm mr-2">
+                                <i class="mdi mdi-trash-can btn-icon-prepend"></i>Supprimer
+                            </a>
+                            <a href="<?= site_url("admin/users"); ?>" class="btn btn-info btn-sm">
+                                <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
+                            </a>
+
+                        </div>
 
                     </div>
                 </div>
