@@ -35,7 +35,9 @@
                                 <tbody>
                                 <?php foreach ($users as $user): ?>
                                     <tr>
-                                        <td><?= $user->nom ?></td>
+                                        <td>
+                                            <a href="<?= site_url("admin/users/show/$user->id") ?>"><?= $user->nom ?></a>
+                                        </td>
                                         <td><?= $user->courriel ?></td>
                                         <td><?= $user->assurance_maladie ?></td>
                                         <td><?= ($user->actif ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-danger">Attente</label>') ?></td>
