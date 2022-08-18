@@ -16,8 +16,8 @@ class UserModel extends Model
         'nom' => 'required|min_length[4]|max_length[120]',
         'courriel' => 'required|valid_email|is_unique[usagers.courriel]',
         'assurance-maladie' => 'required|is_unique[usagers.assurance_maladie|exact_length[14]',
-        'mot-de-passe' => 'required|min_length[3]',
-        'confirm-mot-de-passe' => 'required_with[mot-de-passe]|matches[mot-de-passe]',
+        'mot_de_passe' => 'required|min_length[3]',
+        'confirm_mot_de_passe' => 'required_with[mot_de_passe]|matches[mot_de_passe]',
     ];
 
     protected $validationMessages = [
@@ -34,6 +34,21 @@ class UserModel extends Model
         ],
 
     ];
+
+    //Evénéments callback
+    protected $beforeInsert = ['hashPassword'];
+    protected $beforeUpdate = ['hashPassword'];
+
+    protected function hashPassword(array $data)
+    {
+        if (isset($data['data']['mot_de_passe'])) {
+            $data['data']['password_hash'] = password_hash($data['data']['mot_de_passe'], PASSWORD_DEFAULT);
+            unset($data['data']['mot_de_passe']);
+            unset($data['data']['confirm_mot_de_passe']);
+        }
+
+        return $data;
+    }
 
     // Dates
     protected $useSoftDeletes = true;
@@ -57,7 +72,7 @@ class UserModel extends Model
 
     public function pasDeValidationMotDePasse()
     {
-        unset($this->validationRules['mot-de-passe']);
-        unset($this->validationRules['confirm-mot-de-passe']);
+        unset($this->validationRules['mot_de_passe']);
+        unset($this->validationRules['confirm_mot_de_passe']);
     }
 }

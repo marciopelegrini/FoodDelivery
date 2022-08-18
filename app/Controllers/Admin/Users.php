@@ -92,10 +92,10 @@ class Users extends BaseController
 
             $post = $this->request->getPost();
 
-            if (empty($post['mot-de-passe'])) {
+            if (empty($post['mot_de_passe'])) {
                 $this->usagerModel->pasDeValidationMotDePasse();
-                unset($post['mot-de-passe']);
-                unset($post['confirm-mot-de-passe']);
+                unset($post['mot_de_passe']);
+                unset($post['confirm_mot_de_passe']);
             }
 
             $usager->fill($post);
@@ -109,7 +109,7 @@ class Users extends BaseController
                     ->with('success', "Usager $usager->id a bien été changé !");
             } else {
                 return redirect()->back()->with('errors_model', $this->usagerModel->errors())
-                    ->with('atention', "Veuillez corrigez les erreus !");
+                    ->with('atention', "Veuillez corrigez les erreus !")->withInput();
             }
 
         } else {

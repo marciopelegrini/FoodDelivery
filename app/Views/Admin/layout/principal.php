@@ -16,7 +16,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="<?= site_url('admin/') ?>css/style.css">
     <!-- endinject -->
-    <link rel="shortcut icon" href="<?= site_url('admin/') ?>images/favicon.png"/>
+    <link rel="shortcut icon" href="<?= site_url('/') ?>favicon_food.ico"/>
 
     <!-- This section render the styles specifics that extends this layout -->
     <?= $this->renderSection('styles') ?>
@@ -146,7 +146,7 @@
                 </li>
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                        <img src="images/faces/face5.jpg" alt="profile"/>
+                        <img src="<?= site_url('admin/')?>images/faces/face5.jpg" alt="profile"/>
                         <span class="nav-profile-name">Louis Barnett</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -269,7 +269,6 @@
                         </button>
                     </div>
                 <?php endif; ?>
-
 
                 <?php if (session()->has('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
