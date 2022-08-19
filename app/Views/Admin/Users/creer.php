@@ -27,7 +27,7 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                        <?= form_open("admin/users/enregistrer/$usager->id"); ?>
+                        <?= form_open("admin/users/sauvegarder"); ?>
                         <?= $this->include('Admin/Users/form'); ?>
                         <?= form_close() ?>
 

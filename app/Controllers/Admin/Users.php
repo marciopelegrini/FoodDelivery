@@ -25,9 +25,7 @@ class Users extends BaseController
             'titre' => 'Liste des usagers',
             'users' => $this->usagerModel->findAll(),
         ];
-
         return view('Admin/Users/index', $data);
-
     }
 
     /*
@@ -42,7 +40,6 @@ class Users extends BaseController
         }
 
         $users = $this->usagerModel->recherche_usager($this->request->getGet('term'));
-
         $return = [];
 
         foreach ($users as $user) {
@@ -51,7 +48,6 @@ class Users extends BaseController
 
             $return[] = $data;
         }
-
         return $this->response->setJSON($return);
     }
 
@@ -66,8 +62,27 @@ class Users extends BaseController
             'titre' => "Détails d'usager : $usager->nom",
             'usager' => $usager,
         ];
-
         return view('Admin/Users/show', $data);
+    }
+
+    /*
+     *
+     */
+    public function creer()
+    {
+        $data = [
+            'titre' => "Création d'un nouveau usager",
+            'usager' => $usager,
+        ];
+        return view('Admin/Users/creer', $data);
+    }
+
+    /*
+     *
+     */
+    public function sauvegarder($data)
+    {
+        dd($data);
     }
 
     /*
@@ -85,6 +100,9 @@ class Users extends BaseController
         return view('Admin/Users/editer', $data);
     }
 
+    /*
+     *
+     */
     public function enregistrer($id = null)
     {
         if ($this->request->getMethod() === 'post') {
@@ -101,7 +119,7 @@ class Users extends BaseController
             $usager->fill($post);
 
             if (!$usager->hasChanged()) {
-                return redirect()->back()->with('info', 'Il n\'y a pas de données à changé !');
+                return redirect()->back()->with('info', 'Il n\'y a pas de données à changer !');
             }
 
             if ($this->usagerModel->protect(false)->save($usager)) {
@@ -118,6 +136,9 @@ class Users extends BaseController
         }
     }
 
+    /*
+     *
+     */
     private function chercheUsagerOr404(int $id = null)
     {
         if (!$id || !$usager = $this->usagerModel->where('id', $id)->first()) {
