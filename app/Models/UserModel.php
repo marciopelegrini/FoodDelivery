@@ -79,4 +79,9 @@ class UserModel extends Model
         unset($this->validationRules['mot_de_passe']);
         unset($this->validationRules['confirm_mot_de_passe']);
     }
+
+    public function chercherUsagerParEmail(string $email)
+    {
+        return $this->where('courriel', $email)->first();
+    }
 }
