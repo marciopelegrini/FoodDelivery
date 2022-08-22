@@ -50,14 +50,8 @@
             <?php if (old('is_admin', $usager->is_admin)) : ?> checked="checked" <?php endif; ?>>Administrateur
     </label>
 </div>
-<div class="row">
-    <button type="submit" class="btn btn-success mr-2 btn-sm">
-        <i class="mdi mdi-content-save-outline btn-icon-prepend"></i>
-        Enregistrer
-    </button>
 
-    <a href="<?= site_url("admin/users/show/$usager->id"); ?>" class="btn btn-info btn-sm">
-        <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
-    </a>
-
-</div>
+<button type="submit" class="btn btn-success mr-2 btn-sm">
+    <i class="mdi mdi-content-save-outline btn-icon-prepend"></i>
+    Enregistrer
+</button>

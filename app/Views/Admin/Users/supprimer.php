@@ -12,7 +12,7 @@
     <div class="content-wrapper">
         <div class="row">
 
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-8 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-header bg-primary pb-0 pt-4 ">
                         <h4 class="card-title text-white"><?= esc($titre) ?></h4>
@@ -27,15 +27,22 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                        <?= form_open("admin/users/inserer"); ?>
-                        <?= $this->include('Admin/Users/form'); ?>
+                        <?= form_open("admin/users/supprimer/$usager->id"); ?>
 
-                        <a href="<?= site_url("admin/users/"); ?>" class="btn btn-info btn-sm">
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Attention</strong>Voulez-vous vraiment supprimer l'usager
+                            <strong><?= $usager->nom; ?> ?</strong>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger mr-2 btn-sm">
+                            <i class="mdi mdi-trash-can-outline btn-icon-prepend"></i>
+                            Supprimer
+                        </button>
+
+                        <a href="<?= site_url("admin/users/show/$usager->id"); ?>" class="btn btn-info btn-sm">
                             <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
                         </a>
-
                         <?= form_close() ?>
-
                     </div>
                 </div>
             </div>
@@ -47,7 +54,6 @@
 
 <?php echo $this->section('scripts') ?>
 <!-- Here we send the js scripts to the page -->
-<script src="<?= site_url('admin/vendors/mask/jquery.mask.min.js'); ?>"></script>
-<script src="<?= site_url('admin/vendors/mask/app.js'); ?>"></script>
+
 <?php echo $this->endSection() ?>
 

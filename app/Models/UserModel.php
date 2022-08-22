@@ -7,19 +7,24 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
     protected $table = 'usagers';
-
-    protected $returnType = 'App\Entities\Usager';
-
+    protected $returnType = 'App\Entities\User';
     protected $allowedFields = ['nom', 'courriel', 'telephone'];
+
+    // Dates
+    protected $useSoftDeletes = true;
+    protected $useTimestamps = true;
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
     protected $validationRules = [
         'nom' => 'required|min_length[4]|max_length[120]',
         'courriel' => 'required|valid_email|is_unique[usagers.courriel]',
-        'assurance-maladie' => 'required|is_unique[usagers.assurance_maladie|exact_length[14]',
+        'assurance_maladie' => 'required',
         'mot_de_passe' => 'required|min_length[3]',
         'confirm_mot_de_passe' => 'required_with[mot_de_passe]|matches[mot_de_passe]',
     ];
-
     protected $validationMessages = [
         'nom' => [
             'required' => 'Le nom est obligatoire',
@@ -28,9 +33,8 @@ class UserModel extends Model
             'required' => 'Le courriel est obligatoire.',
             'is_unique' => 'Désolé, mais ce courriel existe déjà !',
         ],
-        'assurance-maladie' => [
+        'assurance_maladie' => [
             'required' => 'Le numéro d\'assurance maladie est obligatoire.',
-            'is_unique' => 'Désolé, mais ce numéro existe déjà !',
         ],
 
     ];
@@ -49,14 +53,6 @@ class UserModel extends Model
 
         return $data;
     }
-
-    // Dates
-    protected $useSoftDeletes = true;
-    protected $useTimestamps = true;
-    protected $dateFormat = 'datetime';
-    protected $createdField = 'created_at';
-    protected $updatedField = 'updated_at';
-    protected $deletedField = 'deleted_at';
 
     public function recherche_usager($term)
     {

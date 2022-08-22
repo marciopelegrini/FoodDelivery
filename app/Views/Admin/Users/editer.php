@@ -29,8 +29,10 @@
                         <?php endif; ?>
                         <?= form_open("admin/users/enregistrer/$usager->id"); ?>
                         <?= $this->include('Admin/Users/form'); ?>
+                        <a href="<?= site_url("admin/users/show/$usager->id"); ?>" class="btn btn-info btn-sm">
+                            <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
+                        </a>
                         <?= form_close() ?>
-
                     </div>
                 </div>
             </div>

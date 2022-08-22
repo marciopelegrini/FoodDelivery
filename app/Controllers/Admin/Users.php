@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Entities\User;
 use App\Models\UserModel;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -23,7 +24,7 @@ class Users extends BaseController
     {
         $data = [
             'titre' => 'Liste des usagers',
-            'users' => $this->usagerModel->findAll(),
+            'users' => $this->usagerModel->withDeleted(true)->findAll(),
         ];
         return view('Admin/Users/index', $data);
     }
@@ -68,8 +69,28 @@ class Users extends BaseController
     /*
      *
      */
+    public function supprimer($id = null)
+    {
+        $usager = $this->chercheUsagerOr404($id);
+
+        if ($this->request->getMethod() === 'post') {
+            $this->usagerModel->delete($id);
+            return redirect()->to(site_url('Admin/Users/'))->with('success', "Usager $usager->nom a bien été supprimé");
+        }
+
+        $data = [
+            'titre' => "Supprimer l'usager : $usager->nom",
+            'usager' => $usager,
+        ];
+        return view('Admin/Users/supprimer', $data);
+    }
+
+    /*
+     *
+     */
     public function creer()
     {
+        $usager = new User();
         $data = [
             'titre' => "Création d'un nouveau usager",
             'usager' => $usager,
@@ -80,9 +101,24 @@ class Users extends BaseController
     /*
      *
      */
-    public function sauvegarder($data)
+    public function inserer()
     {
-        dd($data);
+        if ($this->request->getMethod() === 'post') {
+
+            $usager = new User($this->request->getPost());
+
+            if ($this->usagerModel->protect(false)->save($usager)) {
+                return redirect()->to(site_url("admin/users/show/" . $this->usagerModel->getInsertID()))
+                    ->with('success', "L'usager $usager->nom a bien été enregistré !");
+            } else {
+                return redirect()->back()->with('errors_model', $this->usagerModel->errors())
+                    ->with('atention', "Veuillez corrigez les erreus !")->withInput();
+            }
+
+        } else {
+            /* N'est pas post */
+            return redirect()->back();
+        }
     }
 
     /*
@@ -124,7 +160,7 @@ class Users extends BaseController
 
             if ($this->usagerModel->protect(false)->save($usager)) {
                 return redirect()->to(site_url("admin/users/show/$usager->id"))
-                    ->with('success', "Usager $usager->id a bien été changé !");
+                    ->with('success', "Usager $usager->nom bien été changé !");
             } else {
                 return redirect()->back()->with('errors_model', $this->usagerModel->errors())
                     ->with('atention', "Veuillez corrigez les erreus !")->withInput();
