@@ -24,7 +24,8 @@ class Users extends BaseController
     {
         $data = [
             'titre' => 'Liste des usagers',
-            'users' => $this->usagerModel->withDeleted(true)->findAll(),
+            'users' => $this->usagerModel->withDeleted(true)->paginate(5),
+            'pager'=> $this->usagerModel->pager
         ];
         return view('Admin/Users/index', $data);
     }
@@ -72,6 +73,14 @@ class Users extends BaseController
     public function supprimer($id = null)
     {
         $usager = $this->chercheUsagerOr404($id);
+
+        if ($usager->deleted_at != null) {
+            return redirect()->back()->with('error', "L'usager $usager->nom se trouve déjà supprimé !");
+        }
+
+        if ($usager->is_admin) {
+            return redirect()->back()->with('error', "Veuillez notez qu'il n'est pas possible de supprimer un usager <b>Administrateur</b>");
+        }
 
         if ($this->request->getMethod() === 'post') {
             $this->usagerModel->delete($id);
@@ -128,6 +137,38 @@ class Users extends BaseController
     {
         $usager = $this->chercheUsagerOr404($id);
 
+        if ($usager->deleted_at != null) {
+            return redirect()->back()->with('error', "L'usager $usager->nom se trouve supprimé, donc il n'est pas possible de l'éditer !");
+        }
+
+        $data = [
+            'titre' => "Éditer l'usager : $usager->nom",
+            'usager' => $usager,
+        ];
+
+        return view('Admin/Users/editer', $data);
+    }
+
+    /*
+  *
+  */
+    public function retablirusager($id = null)
+    {
+        $usager = $this->chercheUsagerOr404($id);
+
+        if ($usager->deleted_at == null) {
+            return redirect()->back()->with('info', 'Seulement usagers supprimés peuvent être récupérés !');
+        }
+
+        if ($this->usagerModel->retablirusager($id)) {
+            return redirect()->back()->with('sucess', "L'usager a bien été rétabli !");
+        } else {
+            return redirect()
+                ->back()
+                ->with('errors_model', $this->usagerModel->errors())
+                ->with('error', "Une erreur est arrivé !");
+        }
+
         $data = [
             'titre' => "Éditer l'usager : $usager->nom",
             'usager' => $usager,
@@ -143,6 +184,10 @@ class Users extends BaseController
     {
         if ($this->request->getMethod() === 'post') {
             $usager = $this->chercheUsagerOr404($id);
+
+            if ($usager->deleted_at != null) {
+                return redirect()->back()->with('error', "L'usager $usager->nom se trouve supprimé, donc il n'est pas possible de l'éditer !");
+            }
 
             $post = $this->request->getPost();
 
@@ -177,7 +222,7 @@ class Users extends BaseController
      */
     private function chercheUsagerOr404(int $id = null)
     {
-        if (!$id || !$usager = $this->usagerModel->where('id', $id)->first()) {
+        if (!$id || !$usager = $this->usagerModel->withDeleted(true)->where('id', $id)->first()) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Usager n'était pas trouvé");
         }
         return $usager;

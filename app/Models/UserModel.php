@@ -54,6 +54,14 @@ class UserModel extends Model
         return $data;
     }
 
+    public function retablirusager(int $id)
+    {
+        return $this->protect(false)
+            ->where('id', $id)
+            ->set('deleted_at', null)
+            ->update();
+    }
+
     public function recherche_usager($term)
     {
         if ($term === null) {

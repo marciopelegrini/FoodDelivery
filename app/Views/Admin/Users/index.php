@@ -13,12 +13,10 @@
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="row">
-
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title"><?= $titre ?></h4>
-
                         <div class="ui-widget">
                             <input id="query" name="query" placeholder="Recherche des usagers" class="form-control bg-light mb-5">
                         </div>
@@ -35,6 +33,7 @@
                                     <th>Courriel</th>
                                     <th>Permis de conduire</th>
                                     <th>Status</th>
+                                    <th>Situation</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,11 +44,22 @@
                                         </td>
                                         <td><?= $user->courriel ?></td>
                                         <td><?= $user->assurance_maladie ?></td>
-                                        <td><?= ($user->actif ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-danger">Attente</label>') ?></td>
+                                        <td><?= ($user->actif && $user->deleted_at == null ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-info">Attente</label>') ?></td>
+                                        <td>
+                                            <?= ($user->deleted_at == null ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-danger">Supprimé</label>') ?>
+                                            <?php if ($user->deleted_at != null): ?>
+                                                <a href="<?= site_url("admin/users/retablirusager/$user->id"); ?>"
+                                                   class="badge badge-outline-info ml-2"><i class="mdi mdi-undo btn-icon-prepend"></i> Rétablir usager
+                                                </a>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            <div class="mt-3">
+                                <?= $pager->links() ?>
+                            </div>
                         </div>
                     </div>
                 </div>
