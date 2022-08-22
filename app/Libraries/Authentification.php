@@ -36,7 +36,7 @@ class Authentification
         return true;
     }
 
-    private function logout()
+    public function logout()
     {
         session()->destroy();
     }

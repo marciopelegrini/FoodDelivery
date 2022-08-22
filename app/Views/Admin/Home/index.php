@@ -1,4 +1,4 @@
-<?php echo $this->extend('Admin/layout/main'); ?>
+<?php echo $this->extend('Admin/layout/principal'); ?>
 <?php echo $this->section('title') ?> <?= $titre ?> <?php echo $this->endSection() ?>
 
 <?php echo $this->section('styles') ?>
