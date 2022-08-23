@@ -9,7 +9,7 @@ class Token
     public function __construct($token = null)
     {
         if ($token === null) {
-            $this->token = hex2bin(random_bytes(16));
+            $this->token = bin2hex(random_bytes(16));
         } else {
             $this->token = $token;
         }
@@ -22,6 +22,6 @@ class Token
 
     public function getHash()
     {
-        return hash_hmac('sha256', $this->token, env(CLE_ACTIVATION_COMPTE));
+        return hash_hmac('sha256', $this->token, env('CLE_ACTIVATION_COMPTE'));
     }
 }

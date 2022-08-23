@@ -54,38 +54,19 @@
                     </div>
 
                     <h4 class="text-center">Bonjour, Bienvenue</h4>
-                    <h6 class="font-weight-light text-center mb-3">Se connecter pour continuer.</h6>
+                    <h6 class="font-weight-light text-center mb-3"><?= $titre ?></h6>
 
-                    <?php echo form_open('login/creer'); ?>
+                    <?php echo form_open('password/processoublie'); ?>
 
                     <div class="form-group">
                         <input type="email" name="email" class="form-control form-control-lg" id="email" value="<?= old('email') ?>"
                                placeholder="Veuillez tapez votre courriel">
                     </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control form-control-lg" name="mot_de_passe" id="mot_de_passe"
-                               placeholder="Mot de passe">
-                    </div>
+
                     <div class="mt-3">
-                        <button type="submit" class="btn-block btn-primary btn-lg font-weight-medium auth-form-btn">CONNEXION</button>
+                        <button type="submit" class="btn-block btn-primary btn-lg font-weight-medium auth-form-btn">ENVOYER</button>
                     </div>
-                    <div class="my-2 d-flex justify-content-between align-items-center">
-                        <!--                        <div class="form-check">-->
-                        <!--                            <label class="form-check-label text-muted">-->
-                        <!--                                <input type="checkbox" class="form-check-input">-->
-                        <!--                                Se souvenir de moi-->
-                        <!--                            </label>-->
-                        <!--                        </div>-->
-                        <a href="<?= site_url('password/oublie') ?>" class="mt-2 auth-link text-black">Mot de passe oublié ?</a>
-                    </div>
-                    <!--                        <div class="mb-2">-->
-                    <!--                            <button type="button" class="btn btn-block btn-facebook auth-form-btn">-->
-                    <!--                                <i class="mdi mdi-facebook mr-2"></i>Connect using facebook-->
-                    <!--                            </button>-->
-                    <!--                        </div>-->
-                    <div class="text-center mt-4 font-weight-light">
-                        Vous n'avez pas de compte ? <a href="<?= site_url('register'); ?>" class="text-primary">S'inscrire</a>
-                    </div>
+
                     <?php form_close(); ?>
                 </div>
             </div>
@@ -98,8 +79,3 @@
 <?php echo $this->section('scripts') ?>
 <!-- Here we send the js scripts to the page -->
 <?php echo $this->endSection() ?>
-
-
-
-
-
