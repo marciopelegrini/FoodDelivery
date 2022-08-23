@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : lun. 22 août 2022 à 15:39
--- Version du serveur :  5.7.34
+-- Généré le : mar. 23 août 2022 à 02:00
+-- Version du serveur : 5.7.34
 -- Version de PHP : 7.4.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -76,7 +76,7 @@ INSERT INTO `usagers` (`id`, `nom`, `courriel`, `assurance_maladie`, `telephone`
 (1, 'Marcio Andrei gomes', 'mar@mar.ca', 'pelm 123', '', 1, 0, '', NULL, NULL, NULL, '2022-08-17 09:03:33', '2022-08-17 15:22:36', NULL),
 (2, 'Marisa Molaia', 'mamol@mar.ca', 'molm123', '', 0, 0, '', NULL, NULL, NULL, '2022-08-17 13:03:33', '2022-08-17 09:26:33', NULL),
 (3, 'Steve Jobs', 'steve@jobs.ca', 'jobs 8977 9879', '(987) 987-9879', 0, 1, '$2y$10$kSqiCiveae3MaXeABAkJCuEEPFQd0RCZ6UkmeK.pN3ct0RZrfMauS', NULL, NULL, NULL, '2022-08-22 08:11:42', '2022-08-22 09:22:20', '2022-08-22 09:22:20'),
-(4, 'Gill Bates', 'bates@gill.ca', 'bate 0809 8080', '(808) 808-0809', 1, 1, '$2y$10$TNXxWIPMruzYpe41jPacRO0dWvwC6YGqNWhb1xOSA36crE4KekPpC', NULL, NULL, NULL, '2022-08-22 08:12:33', '2022-08-22 09:18:35', NULL),
+(4, 'Gill Bates', 'bates@gill.ca', 'bate 0809 8080', '(808) 808-0809', 1, 1, '$2y$10$UhbY2ZOPZ2mMUuoHtvZN6uze8l48NZS0o6nUyXadIF4vIMqTVs5Ea', NULL, NULL, NULL, '2022-08-22 08:12:33', '2022-08-22 20:37:10', NULL),
 (5, 'Steve Wozniack', 'woz@woz.ca', 'iwur 8923 4598', '(987) 907-0897', 0, 1, '$2y$10$Wi0BYfx8XgcUEp1LYiVVq.LHBHB9Vw2jhRuAHueFAK5MlA1bKsOR2', NULL, NULL, NULL, '2022-08-22 10:19:53', '2022-08-22 10:19:53', NULL),
 (6, 'Jeff Bezos', 'piroca@bezzos.ca', 'bezo 9889 7979', '(897) 897-8979', 0, 1, '$2y$10$b82pVk/al3TRkYVfG7Ht0./iqquiwbn92g2unTWBFD3M59Bk5i82y', NULL, NULL, NULL, '2022-08-22 10:20:28', '2022-08-22 10:20:28', NULL),
 (7, 'Elon Musk', 'musk@tesla.ca', 'musk 0809 8098', '(098) 098-9080', 0, 1, '$2y$10$076Fv6Dlus5OrsfpDlckxedg/Rf7Zn88Yl00txG3seQNRXtJeuyMe', NULL, NULL, NULL, '2022-08-22 10:20:59', '2022-08-22 10:20:59', NULL);

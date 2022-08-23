@@ -26,6 +26,11 @@ class Login extends BaseController
 
             if ($auth->login($email, $password)) {
                 $usager = $auth->getUsagerConnecte();
+
+                if (!$usager->is_admin) {
+                    return redirect()->to(site_url('/'));
+                }
+
                 return redirect()->to(site_url('admin/home'))->with('success', "Bienvenue, $usager->nom !");
             } else {
                 return redirect()->back()->with('error', 'Usager ou mot de passe invalide');
@@ -39,6 +44,11 @@ class Login extends BaseController
     public function logout()
     {
         service('authentification')->logout();
-        return redirect()->to(site_url('login'));
+        return redirect()->to(site_url('login/afficherMessageLogout'));
+    }
+
+    public function afficherMessageLogout()
+    {
+        return redirect()->to(site_url('login/nouveau'))->with('info', 'Vous êtes bien déconnecté !');
     }
 }
