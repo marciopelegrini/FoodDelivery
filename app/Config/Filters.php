@@ -25,6 +25,8 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'login' => \App\Filters\LoginFilter::class,
         'admin' => \App\Filters\AdminFilter::class,
+        'visiteur' => \App\Filters\VisiteurFilter::class,
+        'throttle' => \App\Filters\Throttle::class,
     ];
 
     /**
@@ -59,7 +61,9 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $methods = [];
+    public $methods = [
+        'post' => ['throttle'],
+    ];
 
     /**
      * List of filter aliases that should run on any
