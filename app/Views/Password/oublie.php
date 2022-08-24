@@ -64,7 +64,8 @@
                     </div>
 
                     <div class="mt-3">
-                        <button type="submit" class="btn-block btn-primary btn-lg font-weight-medium auth-form-btn">ENVOYER</button>
+                        <input type="submit" id="btn-reset-pwd" class="btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+                               value="ENVOYER">
                     </div>
 
                     <?php form_close(); ?>
@@ -77,5 +78,10 @@
 
 <?php echo $this->endSection() ?>
 <?php echo $this->section('scripts') ?>
-<!-- Here we send the js scripts to the page -->
+<script>
+    $("form").submit(function () {
+        $(this).find(":submit").attr('disabled', 'disabled');
+        $("#btn-reset-pwd").val("Envoyant le courriel de récupération");
+    });
+</script>
 <?php echo $this->endSection() ?>

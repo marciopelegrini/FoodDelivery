@@ -8,7 +8,7 @@ class UserModel extends Model
 {
     protected $table = 'usagers';
     protected $returnType = 'App\Entities\User';
-    protected $allowedFields = ['nom', 'courriel', 'telephone'];
+    protected $allowedFields = ['nom', 'courriel', 'telephone', 'assurance_maladie', 'reset_expiry_in', 'reset_hash'];
 
     // Dates
     protected $useSoftDeletes = true;
