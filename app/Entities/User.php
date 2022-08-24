@@ -25,4 +25,11 @@ class User extends Entity
         $this->reset_expiry_in = date('Y-m-d H:i:s', time() + 7200); //Expire en 2 heures à partir de sa génération
 
     }
+
+    public function completResetMotDePasse()
+    {
+        $this->reset_hash = null;
+        $this->reset_expiry_in = null;
+
+    }
 }

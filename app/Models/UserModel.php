@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Libraries\Token;
 use CodeIgniter\Model;
 
 class UserModel extends Model
 {
     protected $table = 'usagers';
     protected $returnType = 'App\Entities\User';
-    protected $allowedFields = ['nom', 'courriel', 'telephone', 'assurance_maladie', 'reset_expiry_in', 'reset_hash'];
+    protected $allowedFields = ['nom', 'courriel', 'telephone', 'assurance_maladie', 'mot_de_passe', 'reset_expiry_in', 'reset_hash'];
 
     // Dates
     protected $useSoftDeletes = true;
@@ -83,5 +84,19 @@ class UserModel extends Model
     public function chercherUsagerParEmail(string $email)
     {
         return $this->where('courriel', $email)->first();
+    }
+
+    public function chercheUsagerParToken(string $token)
+    {
+        $token = new Token($token);
+        $token_hash = $token->getHash();
+
+        $usager = $this->where('reset_hash', $token_hash)->first();
+        if ($usager != null) {
+            if ($usager->reset_expiry_in < date('Y-m-d H:i:s')) {
+                $usager = null;
+            }
+            return $usager;
+        }
     }
 }
