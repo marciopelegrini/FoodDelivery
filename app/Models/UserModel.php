@@ -71,6 +71,7 @@ class UserModel extends Model
 
         return $this->select('id, nom')
             ->like('nom', $term)
+            ->withDeleted(true)
             ->get()
             ->getResult();
     }

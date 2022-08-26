@@ -25,7 +25,7 @@ class Users extends BaseController
         $data = [
             'titre' => 'Liste des usagers',
             'users' => $this->usagerModel->withDeleted(true)->paginate(5),
-            'pager'=> $this->usagerModel->pager
+            'pager' => $this->usagerModel->pager,
         ];
         return view('Admin/Users/index', $data);
     }
@@ -168,13 +168,6 @@ class Users extends BaseController
                 ->with('errors_model', $this->usagerModel->errors())
                 ->with('error', "Une erreur est arrivé !");
         }
-
-        $data = [
-            'titre' => "Éditer l'usager : $usager->nom",
-            'usager' => $usager,
-        ];
-
-        return view('Admin/Users/editer', $data);
     }
 
     /*
