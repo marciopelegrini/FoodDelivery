@@ -11,29 +11,57 @@ class ExtraModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'App\Entities\Extra';
     protected $useSoftDeletes   = false;
-    protected $allowedFields    = ['nom', 'slug', 'prix', 'description'];
+    protected $allowedFields    = ['nom', 'slug', 'prix', 'ativo', 'description'];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
-    protected $skipValidation       = false;
-    protected $cleanValidationRules = true;
+    protected $validationRules = [
+        'nom' => 'required|min_length[4]|max_length[128]|is_unique[categories.nom]',
+        'prix'=>
+    ];
 
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert   = [];
-    protected $afterInsert    = [];
-    protected $beforeUpdate   = [];
-    protected $afterUpdate    = [];
-    protected $beforeFind     = [];
-    protected $afterFind      = [];
-    protected $beforeDelete   = [];
-    protected $afterDelete    = [];
+    protected $validationMessages = [
+        'nom' => [
+            'required' => 'Le nom est obligatoire',
+        ],
+    ];
+
+    //Evénéments callback
+    protected $beforeInsert = ['creerSlug'];
+    protected $beforeUpdate = ['creerSlug'];
+
+    protected function creerSlug(array $data)
+    {
+        if (isset($data['data']['nom'])) {
+            $data['data']['slug'] = mb_url_title($data['data']['nom'], '-', true);
+        }
+
+        return $data;
+    }
+
+    public function retablirCategorie(int $id)
+    {
+        return $this->protect(false)->where('id', $id)
+            ->set('deleted_at', null)
+            ->update();
+    }
+
+    public function recherche_categories($term)
+    {
+        if ($term === null) {
+            return [];
+        }
+
+        return $this->select('id, nom')
+            ->like('nom', $term)
+            ->withDeleted(true)
+            ->get()
+            ->getResult();
+    }
+
 }
