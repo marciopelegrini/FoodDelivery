@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreerTableCategories extends Migration
+class CreerTableExtras extends Migration
 {
     public function up()
     {
@@ -22,6 +22,13 @@ class CreerTableCategories extends Migration
             'slug' => [
                 'type' => 'VARCHAR',
                 'constraint' => '128',
+            ],
+            'prix' => [
+                'type' => 'DECIMAL',
+                'constraint' => '10,2',
+            ],
+            'description' => [
+                'type' => 'TEXT',
             ],
             'actif' => [
                 'type' => 'BOOLEAN',
@@ -47,11 +54,11 @@ class CreerTableCategories extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id')->addUniqueKey('nom');
-        $this->forge->createTable('categories');
+        $this->forge->createTable('extras');
     }
 
     public function down()
     {
-        $this->forge->dropTable('categories');
+        $this->forge->dropTable('extras');
     }
 }
