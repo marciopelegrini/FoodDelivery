@@ -188,6 +188,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= site_url('admin/extras') ?>">
+                        <i class="mdi mdi-album menu-icon"></i>
+                        <span class="menu-title">Extras</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="<?= site_url('admin/produits') ?>">
                         <i class="mdi mdi-box-cutter menu-icon"></i>
                         <span class="menu-title">Produits</span>

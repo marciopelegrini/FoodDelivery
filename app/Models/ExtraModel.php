@@ -6,28 +6,28 @@ use CodeIgniter\Model;
 
 class ExtraModel extends Model
 {
-    protected $table            = 'extras';
-    protected $primaryKey       = 'id';
+    protected $table = 'extras';
+    protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'App\Entities\Extra';
-    protected $useSoftDeletes   = false;
-    protected $allowedFields    = ['nom', 'slug', 'prix', 'ativo', 'description'];
+    protected $returnType = 'App\Entities\Extra';
+    protected $useSoftDeletes = false;
+    protected $allowedFields = ['nom', 'slug', 'prix', 'actif', 'description'];
 
     // Dates
     protected $useTimestamps = true;
-    protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $dateFormat = 'datetime';
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
+    protected $deletedField = 'deleted_at';
 
     protected $validationRules = [
-        'nom' => 'required|min_length[4]|max_length[128]|is_unique[categories.nom]',
-        'prix'=>
+        'nom' => 'required|min_length[2]|max_length[128]|is_unique[extras.nom]',
     ];
 
     protected $validationMessages = [
         'nom' => [
             'required' => 'Le nom est obligatoire',
+            'is_unique' => 'Cette extra existe déjà',
         ],
     ];
 
@@ -44,14 +44,14 @@ class ExtraModel extends Model
         return $data;
     }
 
-    public function retablirCategorie(int $id)
+    public function retablir_extra(int $id)
     {
         return $this->protect(false)->where('id', $id)
             ->set('deleted_at', null)
             ->update();
     }
 
-    public function recherche_categories($term)
+    public function rechercher_extras($term)
     {
         if ($term === null) {
             return [];
@@ -63,5 +63,4 @@ class ExtraModel extends Model
             ->get()
             ->getResult();
     }
-
 }
