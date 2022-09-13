@@ -12,7 +12,7 @@
     <div class="content-wrapper">
         <div class="row">
 
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-8 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-header bg-primary pb-0 pt-4 ">
                         <h4 class="card-title text-white"><?= esc($titre) ?></h4>
@@ -27,9 +27,9 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                        <?= form_open("admin/categories/inserer/"); ?>
-                        <?= $this->include('Admin/Categories/form'); ?>
-                        <a href="<?= site_url("admin/categories/"); ?>" class="btn btn-info btn-sm">
+                        <?= form_open("admin/extras/inserer/"); ?>
+                        <?= $this->include('Admin/Extras/form'); ?>
+                        <a href="<?= site_url("admin/extras/"); ?>" class="btn btn-info btn-sm">
                             <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
                         </a>
                         <?= form_close() ?>

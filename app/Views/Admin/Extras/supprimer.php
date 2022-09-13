@@ -27,11 +27,11 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                        <?= form_open("admin/categories/supprimer/$categorie->id"); ?>
+                        <?= form_open("admin/extras/supprimer/$extra->id"); ?>
 
                         <div class="alert alert-warning" role="alert">
-                            <strong>Attention</strong>Voulez-vous vraiment supprimer cette categorie ?
-                            <strong><?= $categorie->nom; ?> ?</strong>
+                            <strong>Attention</strong>Voulez-vous vraiment supprimer cette extra ?
+                            <strong><?= esc($extra->nom); ?> ?</strong>
                         </div>
 
                         <button type="submit" class="btn btn-danger mr-2 btn-sm">
@@ -39,7 +39,7 @@
                             Supprimer
                         </button>
 
-                        <a href="<?= site_url("admin/categories/show/$categorie->id"); ?>" class="btn btn-info btn-sm">
+                        <a href="<?= site_url("admin/extras/show/$extra->id"); ?>" class="btn btn-info btn-sm">
                             <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
                         </a>
                         <?= form_close() ?>

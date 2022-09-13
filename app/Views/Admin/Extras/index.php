@@ -30,6 +30,7 @@
                                 <thead>
                                 <tr>
                                     <th>Nom</th>
+                                    <th>Prix</th>
                                     <th>Date de création</th>
                                     <th>Slug</th>
                                     <th>Status</th>
@@ -42,14 +43,16 @@
                                         <td>
                                             <a href="<?= site_url("admin/extras/show/$extra->id") ?>"><?= $extra->nom ?></a>
                                         </td>
+                                        <td>$&nbsp;<?= esc(number_format($extra->prix, 2)) ?></td>
                                         <td><?= $extra->created_at->humanize() ?></td>
                                         <td><?= $extra->slug ?></td>
                                         <td><?= ($extra->actif && $extra->deleted_at == null ? '<label class="badge badge-success">Actif</label>' : '<label class="badge badge-warning">Inactif</label>') ?></td>
                                         <td>
                                             <?= ($extra->deleted_at == null ? '<label class="badge badge-info">Disponible</label>' : '<label class="badge badge-danger">Supprimé</label>') ?>
                                             <?php if ($extra->deleted_at != null): ?>
-                                                <a href="<?= site_url("admin/extras/retablir_extra/$extra->id"); ?>"
-                                                   class="badge badge-outline-info ml-2"><i class="mdi mdi-undo btn-icon-prepend"></i> Rétablir categorie
+                                                <a href="<?= site_url("admin/extras/retablirExtra/$extra->id"); ?>"
+                                                   class="badge badge-outline-info ml-2"><i class="mdi mdi-undo btn-icon-prepend"></i> Rétablir
+                                                    categorie
                                                 </a>
                                             <?php endif; ?>
                                         </td>

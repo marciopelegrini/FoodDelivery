@@ -27,9 +27,9 @@
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
-                        <?= form_open("admin/categories/enregistrer/$categorie->id"); ?>
-                        <?= $this->include('Admin/Categories/form'); ?>
-                        <a href="<?= site_url("admin/categories/show/$categorie->id"); ?>" class="btn btn-info btn-sm">
+                        <?= form_open("admin/extras/enregistrer/$extra->id"); ?>
+                        <?= $this->include('Admin/Extras/form'); ?>
+                        <a href="<?= site_url("admin/Extras/show/$extra->id"); ?>" class="btn btn-info btn-sm">
                             <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
                         </a>
                         <?= form_close() ?>

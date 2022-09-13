@@ -25,6 +25,16 @@
                         </p>
 
                         <p class="card-text">
+                            <span class="font-weight-bold">Prix : </span>
+                            <?= esc($extra->prix) ?>
+                        </p>
+
+                        <p class="card-text">
+                            <span class="font-weight-bold">Description : </span>
+                            <?= esc($extra->description) ?>
+                        </p>
+
+                        <p class="card-text">
                             <span class="font-weight-bold">Actif : </span>
                             <?= ($extra->actif ? 'Oui' : 'Non') ?>
                         </p>
