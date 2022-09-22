@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : mar. 13 sep. 2022 à 19:42
--- Version du serveur :  5.7.34
--- Version de PHP : 7.4.21
+-- Hôte : localhost
+-- Généré le : jeu. 22 sep. 2022 à 20:14
+-- Version du serveur : 10.4.21-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `food`
 --
+CREATE DATABASE IF NOT EXISTS `food` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `food`;
 
 -- --------------------------------------------------------
 
@@ -31,7 +33,7 @@ CREATE TABLE `categories` (
   `id` int(5) UNSIGNED NOT NULL,
   `nom` varchar(128) NOT NULL,
   `slug` varchar(128) NOT NULL,
-  `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
@@ -59,7 +61,7 @@ CREATE TABLE `extras` (
   `slug` varchar(128) NOT NULL,
   `prix` decimal(10,2) NOT NULL,
   `description` text NOT NULL,
-  `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL
@@ -74,6 +76,34 @@ INSERT INTO `extras` (`id`, `nom`, `slug`, `prix`, `description`, `actif`, `crea
 (2, 'Fromage', 'fromage-extra', '3.00', 'Extra de fromage rapé', 1, '2022-09-12 19:56:16', '2022-09-13 15:40:03', '2022-09-13 15:40:03'),
 (3, 'Sauce aux tomates', 'sauce-aux-tomates', '0.50', 'Sauce aux tomates frais', 1, '2022-09-13 15:23:13', '2022-09-13 15:23:13', NULL),
 (5, 'Fromage feta', 'fromage-feta', '3.00', 'fromage feta', 1, '2022-09-13 15:35:10', '2022-09-13 15:39:48', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `mesures`
+--
+
+CREATE TABLE `mesures` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `nom` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `mesures`
+--
+
+INSERT INTO `mesures` (`id`, `nom`, `description`, `actif`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Petit', 'Taille petit environ 6 morceaux', 1, '2022-09-14 13:17:46', '2022-09-14 13:17:46', NULL),
+(2, 'Moyenne', 'Taille moyenne, environ 8 morceaux', 1, '2022-09-14 13:17:46', '2022-09-14 13:17:46', NULL),
+(3, 'Large', 'Taille grande environ 12\" 12 morceaux', 1, '2022-09-14 13:18:57', '2022-09-14 13:18:57', NULL),
+(4, 'Extra large', 'Taille extra grande, environ 14 morceaux', 1, '2022-09-14 13:18:57', '2022-09-14 13:18:57', NULL),
+(5, 'Canette', '710 ml', 1, '2022-09-14 14:56:58', '2022-09-14 15:29:46', NULL),
+(6, 'Canette ordinaire', '355 ml', 1, '2022-09-14 15:34:23', '2022-09-14 15:34:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -99,7 +129,8 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 (2, '2022-08-15-013041', 'App\\Database\\Migrations\\CreateUserTable', 'default', 'App', 1660571073, 1),
 (3, '2022-08-17-130221', 'App\\Database\\Migrations\\CreationTableUsager', 'default', 'App', 1660741399, 2),
 (4, '2022-08-24-235452', 'App\\Database\\Migrations\\CreerTableCategories', 'default', 'App', 1663005038, 3),
-(5, '2022-08-27-004219', 'App\\Database\\Migrations\\CreerTableExtras', 'default', 'App', 1663005038, 3);
+(5, '2022-08-27-004219', 'App\\Database\\Migrations\\CreerTableExtras', 'default', 'App', 1663005038, 3),
+(6, '2022-09-14-131541', 'App\\Database\\Migrations\\CreerTableMesures', 'default', 'App', 1663870356, 4);
 
 -- --------------------------------------------------------
 
@@ -113,8 +144,8 @@ CREATE TABLE `usagers` (
   `courriel` varchar(128) NOT NULL,
   `assurance_maladie` varchar(15) DEFAULT NULL,
   `telephone` varchar(20) NOT NULL,
-  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `actif` tinyint(1) NOT NULL DEFAULT '0',
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `actif` tinyint(1) NOT NULL DEFAULT 0,
   `password_hash` varchar(255) NOT NULL,
   `activation_hash` varchar(64) DEFAULT NULL,
   `reset_hash` varchar(64) DEFAULT NULL,
@@ -156,6 +187,13 @@ ALTER TABLE `extras`
   ADD UNIQUE KEY `nom` (`nom`);
 
 --
+-- Index pour la table `mesures`
+--
+ALTER TABLE `mesures`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nom` (`nom`);
+
+--
 -- Index pour la table `migrations`
 --
 ALTER TABLE `migrations`
@@ -187,10 +225,16 @@ ALTER TABLE `extras`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT pour la table `mesures`
+--
+ALTER TABLE `mesures`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `usagers`

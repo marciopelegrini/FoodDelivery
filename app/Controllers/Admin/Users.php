@@ -79,7 +79,8 @@ class Users extends BaseController
         }
 
         if ($usager->is_admin) {
-            return redirect()->back()->with('error', "Veuillez notez qu'il n'est pas possible de supprimer un usager <b>Administrateur</b>");
+            return redirect()->back()
+                ->with('error', "Veuillez notez qu'il n'est pas possible de supprimer un usager <b>Administrateur</b>");
         }
 
         if ($this->request->getMethod() === 'post') {
