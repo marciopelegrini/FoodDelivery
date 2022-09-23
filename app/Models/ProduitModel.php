@@ -4,12 +4,19 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CategorieModel extends Model
+class ProduitModel extends Model
 {
-    protected $table = 'categories';
-    protected $returnType = '\App\Entities\Categorie';
+    protected $table = 'produits';
+    protected $returnType = 'App\Entities\Produit';
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['nom', 'slug', 'actif'];
+    protected $allowedFields = [
+        'categorie_id',
+        'nom',
+        'slug',
+        'photo',
+        'ingredients',
+        'actif',
+    ];
 
     // Dates
     protected $useTimestamps = true;
@@ -19,12 +26,18 @@ class CategorieModel extends Model
     protected $deletedField = 'deleted_at';
 
     protected $validationRules = [
-        'nom' => 'required|min_length[4]|max_length[128]|is_unique[categories.nom]',
+        'nom' => 'required|min_length[4]|max_length[128]|is_unique[produits.nom]',
+        'categorie_id' => 'required|integer',
+        'ingredients' => 'required|min_length[4]|max_length[1000]',
     ];
 
     protected $validationMessages = [
         'nom' => [
-            'required' => 'Le nom est obligatoire',
+            'required' => 'Le nom du produit est obligatoire.',
+            'is_unique' => 'Ce produit existe déjà.',
+        ],
+        'categorie_id' => [
+            'required' => 'Le champ catégorie est obligatoire.',
         ],
     ];
 
@@ -41,14 +54,14 @@ class CategorieModel extends Model
         return $data;
     }
 
-    public function retablirCategorie(int $id)
+    public function retablir_produit(int $id)
     {
         return $this->protect(false)->where('id', $id)
             ->set('deleted_at', null)
             ->update();
     }
 
-    public function recherche_categories($term)
+    public function recherche_produit($term)
     {
         if ($term === null) {
             return [];

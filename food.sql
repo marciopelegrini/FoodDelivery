@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : jeu. 22 sep. 2022 à 20:14
+-- Généré le : ven. 23 sep. 2022 à 21:44
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `food`
 --
-CREATE DATABASE IF NOT EXISTS `food` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `food`;
 
 -- --------------------------------------------------------
 
@@ -29,6 +27,7 @@ USE `food`;
 -- Structure de la table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(5) UNSIGNED NOT NULL,
   `nom` varchar(128) NOT NULL,
@@ -55,6 +54,7 @@ INSERT INTO `categories` (`id`, `nom`, `slug`, `actif`, `created_at`, `updated_a
 -- Structure de la table `extras`
 --
 
+DROP TABLE IF EXISTS `extras`;
 CREATE TABLE `extras` (
   `id` int(5) UNSIGNED NOT NULL,
   `nom` varchar(128) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE `extras` (
 
 INSERT INTO `extras` (`id`, `nom`, `slug`, `prix`, `description`, `actif`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Bacon importé', 'bacon-importe', '3.00', 'Bacon extra fumé', 1, '2022-09-12 19:56:16', '2022-09-13 15:07:24', NULL),
-(2, 'Fromage', 'fromage-extra', '3.00', 'Extra de fromage rapé', 1, '2022-09-12 19:56:16', '2022-09-13 15:40:03', '2022-09-13 15:40:03'),
+(2, 'Fromage', 'fromage-extra', '3.00', 'Extra de fromage rapé', 1, '2022-09-12 19:56:16', '2022-09-22 14:22:31', NULL),
 (3, 'Sauce aux tomates', 'sauce-aux-tomates', '0.50', 'Sauce aux tomates frais', 1, '2022-09-13 15:23:13', '2022-09-13 15:23:13', NULL),
 (5, 'Fromage feta', 'fromage-feta', '3.00', 'fromage feta', 1, '2022-09-13 15:35:10', '2022-09-13 15:39:48', NULL);
 
@@ -83,6 +83,7 @@ INSERT INTO `extras` (`id`, `nom`, `slug`, `prix`, `description`, `actif`, `crea
 -- Structure de la table `mesures`
 --
 
+DROP TABLE IF EXISTS `mesures`;
 CREATE TABLE `mesures` (
   `id` int(5) UNSIGNED NOT NULL,
   `nom` varchar(128) NOT NULL,
@@ -111,6 +112,7 @@ INSERT INTO `mesures` (`id`, `nom`, `description`, `actif`, `created_at`, `updat
 -- Structure de la table `migrations`
 --
 
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `version` varchar(255) NOT NULL,
@@ -130,7 +132,38 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 (3, '2022-08-17-130221', 'App\\Database\\Migrations\\CreationTableUsager', 'default', 'App', 1660741399, 2),
 (4, '2022-08-24-235452', 'App\\Database\\Migrations\\CreerTableCategories', 'default', 'App', 1663005038, 3),
 (5, '2022-08-27-004219', 'App\\Database\\Migrations\\CreerTableExtras', 'default', 'App', 1663005038, 3),
-(6, '2022-09-14-131541', 'App\\Database\\Migrations\\CreerTableMesures', 'default', 'App', 1663870356, 4);
+(6, '2022-09-14-131541', 'App\\Database\\Migrations\\CreerTableMesures', 'default', 'App', 1663870356, 4),
+(7, '2022-09-22-183713', 'App\\Database\\Migrations\\CreerTableProduits', 'default', 'App', 1663872524, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `produits`
+--
+
+DROP TABLE IF EXISTS `produits`;
+CREATE TABLE `produits` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `categorie_id` int(5) UNSIGNED NOT NULL,
+  `nom` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `ingredients` text NOT NULL,
+  `photo` varchar(200) NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `produits`
+--
+
+INSERT INTO `produits` (`id`, `categorie_id`, `nom`, `slug`, `ingredients`, `photo`, `actif`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, '4 fromages', '4-fromages', 'pate, sauce, cheddar, mozzarella, feta, parmesan', '', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
+(2, 1, 'Pepperoni', 'pepperoni', 'pepperoni', '', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
+(3, 4, 'Coca-Cola', 'coca-cola', '', '', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL),
+(4, 2, 'Tiramissu', 'tiramissu', 'tiramissu', '', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -138,6 +171,7 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 -- Structure de la table `usagers`
 --
 
+DROP TABLE IF EXISTS `usagers`;
 CREATE TABLE `usagers` (
   `id` int(5) UNSIGNED NOT NULL,
   `nom` varchar(128) NOT NULL,
@@ -200,6 +234,14 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `produits`
+--
+ALTER TABLE `produits`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nom` (`nom`),
+  ADD KEY `produits_categorie_id_foreign` (`categorie_id`);
+
+--
 -- Index pour la table `usagers`
 --
 ALTER TABLE `usagers`
@@ -234,13 +276,29 @@ ALTER TABLE `mesures`
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `produits`
+--
+ALTER TABLE `produits`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `usagers`
 --
 ALTER TABLE `usagers`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `produits`
+--
+ALTER TABLE `produits`
+  ADD CONSTRAINT `produits_categorie_id_foreign` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
