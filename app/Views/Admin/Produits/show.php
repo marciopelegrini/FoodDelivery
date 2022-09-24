@@ -21,47 +21,57 @@
 
                         <p class="card-text">
                             <span class="font-weight-bold">Nom : </span>
-                            <?= esc($categorie->nom) ?>
+                            <?= esc($produit->nom) ?>
+                        </p>
+
+                        <p class="card-text">
+                            <span class="font-weight-bold">Categorie : </span>
+                            <?= esc($produit->categorie) ?>
+                        </p>
+
+                        <p class="card-text">
+                            <span class="font-weight-bold">Slug : </span>
+                            <?= esc($produit->slug) ?>
                         </p>
 
                         <p class="card-text">
                             <span class="font-weight-bold">Actif : </span>
-                            <?= ($categorie->actif ? 'Oui' : 'Non') ?>
+                            <?= ($produit->actif ? 'Oui' : 'Non') ?>
                         </p>
 
                         <p class="card-text">
                             <span class="font-weight-bold">Créé : </span>
-                            <?= $categorie->created_at->humanize() ?>
+                            <?= $produit->created_at->humanize() ?>
                         </p>
 
-                        <?php if ($categorie->deleted_at == null): ?>
+                        <?php if ($produit->deleted_at == null): ?>
                             <p class="card-text">
                                 <span class="font-weight-bold">Modifié : </span>
-                                <?= $categorie->updated_at->humanize() ?>
+                                <?= $produit->updated_at->humanize() ?>
                             </p>
                         <?php else: ?>
                             <p class="card-text">
                                 <span class="font-weight-bold text-danger">Supprimé : </span>
-                                <?= $categorie->deleted_at->humanize() ?>
+                                <?= $produit->deleted_at->humanize() ?>
                             </p>
                         <?php endif; ?>
 
                         <div class="mt-4">
 
-                            <?php if ($categorie->deleted_at == null): ?>
-                                <a href="<?= site_url("admin/categories/editer/$categorie->id"); ?>" class="btn btn-primary btn-sm mr-2">
+                            <?php if ($produit->deleted_at == null): ?>
+                                <a href="<?= site_url("admin/produits/editer/$produit->id"); ?>" class="btn btn-primary btn-sm mr-2">
                                     <i class="mdi mdi-pencil btn-icon-prepend"></i>Éditer
                                 </a>
-                                <a href="<?= site_url("admin/categories/supprimer/$categorie->id"); ?>" class="btn btn-danger btn-sm mr-2">
+                                <a href="<?= site_url("admin/produits/supprimer/$produit->id"); ?>" class="btn btn-danger btn-sm mr-2">
                                     <i class="mdi mdi-trash-can btn-icon-prepend"></i>Supprimer
                                 </a>
                             <?php else: ?>
-                                <a href="<?= site_url("admin/categories/retablircategorie/$categorie->id"); ?>" class="btn btn-inverse-dark btn-sm mr-2">
+                                <a href="<?= site_url("admin/produits/retablir_produit/$produit->id"); ?>" class="btn btn-inverse-dark btn-sm mr-2">
                                     <i class="mdi mdi-undo btn-icon-prepend"></i> Rétablir categorie
                                 </a>
                             <?php endif; ?>
 
-                            <a href="<?= site_url("admin/categories"); ?>" class="btn btn-info btn-sm">
+                            <a href="<?= site_url("admin/produits"); ?>" class="btn btn-info btn-sm">
                                 <i class="mdi mdi-arrow-left btn-icon-prepend"></i> Retourner
                             </a>
                         </div>
