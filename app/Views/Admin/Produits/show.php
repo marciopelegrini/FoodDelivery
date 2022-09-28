@@ -18,6 +18,16 @@
                         <h4 class="card-title text-white"><?= esc($titre) ?></h4>
                     </div>
                     <div class="card-body">
+                        <div class="card text-center" style="width: 18rem;">
+                            <?php if ($produit->image): ?>
+                                <img class="card-img-top" src="<?= site_url('') ?>" alt="Card Image">
+                            <?php else: ?>
+                                <img class="card-img-top" src="<?= site_url('admin/images/no-image.png') ?>" alt="Card Image">
+                            <?php endif; ?>
+                            <a href="<?= site_url("admin/produits/editer-image/$produit->id") ?>" class="btn btn-outline-dark m-3">
+                                <i class="mdi mdi-image btn-icon-prepend"></i>Changer la photo
+                            </a>
+                        </div>
 
                         <p class="card-text">
                             <span class="font-weight-bold">Nom : </span>

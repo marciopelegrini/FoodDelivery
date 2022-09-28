@@ -61,6 +61,11 @@ class Produits extends BaseController
         return view('Admin/Produits/editer', $data);
     }
 
+    public function editer_image()
+    {
+        
+    }
+
     public function enregistrer($id = null)
     {
         if ($this->request->getMethod() === 'post') {
@@ -82,6 +87,44 @@ class Produits extends BaseController
             } else {
                 return redirect()->back()->with('errors_model', $this->produitModel->errors())
                     ->with('atention', "Veuillez corrigez les erreus !")->withInput();
+            }
+
+        } else {
+            /* N'est pas post */
+            return redirect()->back();
+        }
+    }
+
+    public function creer()
+    {
+        $produit = new Produit();
+
+        $data = [
+            'titre' => "Création d'un nouveau produit",
+            'produit' => $produit,
+            'categories' => $this->categorieModel->where('actif', true)->findAll(),
+        ];
+
+        return view('Admin/Produits/creer', $data);
+
+    }
+
+    public function inserer()
+    {
+        if ($this->request->getMethod() === 'post') {
+
+            $produits = new Produit($this->request->getPost());
+
+            if ($this->produitModel->save($produits)) {
+                return redirect()
+                    ->to(site_url("admin/produits/show/" . $this->produitModel->getInsertID()))
+                    ->with('success', "Le produit $produits->nom a bien été enregistré !");
+            } else {
+                return redirect()
+                    ->back()
+                    ->with('errors_model', $this->produitModel->errors())
+                    ->with('atention', "Veuillez corrigez les erreus !")
+                    ->withInput();
             }
 
         } else {
