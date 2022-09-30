@@ -24,7 +24,7 @@
                             <?php else: ?>
                                 <img class="card-img-top" src="<?= site_url('admin/images/no-image.png') ?>" alt="Card Image">
                             <?php endif; ?>
-                            <a href="<?= site_url("admin/produits/editer-image/$produit->id") ?>" class="btn btn-outline-dark m-3">
+                            <a href="<?= site_url("admin/produits/editerImage/$produit->id") ?>" class="btn btn-outline-dark m-3">
                                 <i class="mdi mdi-image btn-icon-prepend"></i>Changer la photo
                             </a>
                         </div>

@@ -61,9 +61,47 @@ class Produits extends BaseController
         return view('Admin/Produits/editer', $data);
     }
 
-    public function editer_image()
+    public function editerImage($id = null)
     {
-        
+        $produit = $this->chercheProduitOr404($id);
+        $data = [
+            'titre' => "Éditer l'image du produit : $produit->nom",
+            'produit' => $produit,
+        ];
+
+        return view('Admin/Produits/editer-image', $data);
+    }
+
+    public function upload($id = null)
+    {
+        $produit = $this->chercheProduitOr404($id);
+        $photo = $this->request->getFile('photoproduit');
+
+        if (!$photo->isValid()) {
+            $code_erreur = $photo->getError();
+
+            if ($code_erreur == UPLOAD_ERR_NO_FILE) {
+                return redirect()->back()->with("error", 'Aucun fichier est séléctionné');
+            }
+        }
+
+        $taille_image = $photo->getSizeByUnit('kb');
+        if ($taille_image > "5000") {
+            return redirect()->back()->with("error", "La taille du fichier ne doit pas dépasser 2Mo");
+        }
+
+        $type_image = $photo->getMimeType();
+        $type_image_nettoye = explode('/', $type_image);
+        $types_permis = ['jpeg', 'png', 'webp'];
+        if (!in_array($type_image_nettoye[1], $types_permis)) {
+            return redirect()->back()->with("error", "Ce fichier n'est pas permis.");
+        }
+
+        list($width, $height) = getimagesize($photo->getPathname());
+        if ($width < "400" || $height < "400") {
+            return redirect()->back()->with("error", "La photo doit être plus grande que 400x400 px");
+        }
+        dd($photo);
     }
 
     public function enregistrer($id = null)
