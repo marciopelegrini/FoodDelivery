@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 23 sep. 2022 à 21:44
+-- Généré le : lun. 03 oct. 2022 à 19:13
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -160,10 +160,10 @@ CREATE TABLE `produits` (
 --
 
 INSERT INTO `produits` (`id`, `categorie_id`, `nom`, `slug`, `ingredients`, `photo`, `actif`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, '4 fromages', '4-fromages', 'pate, sauce, cheddar, mozzarella, feta, parmesan', '', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
-(2, 1, 'Pepperoni', 'pepperoni', 'pepperoni', '', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
-(3, 4, 'Coca-Cola', 'coca-cola', '', '', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL),
-(4, 2, 'Tiramissu', 'tiramissu', 'tiramissu', '', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL);
+(1, 1, '4 fromages', '4-fromages', 'pate, sauce, cheddar, mozzarella, feta, parmesan', '1664816270_c94209db6ea24433da4a.jpg', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
+(2, 1, 'Pepperoni', 'pepperoni', 'pepperoni', '1664816358_c78be35396c4d9d14920.jpg', 1, '2022-09-22 14:49:05', '2022-09-22 14:49:05', NULL),
+(3, 4, 'Coca-Cola', 'coca-cola', '', '1664816429_8d09b57a8cff4ec35527.jpg', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL),
+(4, 2, 'Tiramissu', 'tiramissu', 'tiramissu', '1664816467_ecf0f60624b711947d65.jpg', 1, '2022-09-22 14:52:10', '2022-09-22 14:52:10', NULL);
 
 -- --------------------------------------------------------
 
