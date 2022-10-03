@@ -75,36 +75,52 @@ class Produits extends BaseController
     public function upload($id = null)
     {
         $produit = $this->chercheProduitOr404($id);
-        $photo = $this->request->getFile('photoproduit');
+        $image = $this->request->getFile('photoproduit');
 
-        if (!$photo->isValid()) {
-            $code_erreur = $photo->getError();
+        if (!$image->isValid()) {
+            $code_erreur = $image->getError();
 
             if ($code_erreur == UPLOAD_ERR_NO_FILE) {
                 return redirect()->back()->with("error", 'Aucun fichier est séléctionné');
             }
         }
 
-        $taille_image = $photo->getSizeByUnit('kb');
+        $taille_image = $image->getSizeByUnit('kb');
         if ($taille_image > "5000") {
             return redirect()->back()->with("error", "La taille du fichier ne doit pas dépasser 2Mo");
         }
 
-        $type_image = $photo->getMimeType();
+        $type_image = $image->getMimeType();
         $type_image_nettoye = explode('/', $type_image);
         $types_permis = ['jpeg', 'png', 'webp'];
         if (!in_array($type_image_nettoye[1], $types_permis)) {
             return redirect()->back()->with("error", "Ce fichier n'est pas permis.");
         }
 
-        list($width, $height) = getimagesize($photo->getPathname());
+        list($width, $height) = getimagesize($image->getPathname());
         if ($width < "400" || $height < "400") {
             return redirect()->back()->with("error", "La photo doit être plus grande que 400x400 px");
         }
 
-        $imageChemin = $photo->store('produits');
+        $imageChemin = $image->store('produits');
 
-        dd($photo);
+        $imageChemin = WRITEPATH . 'uploads/' . $imageChemin;
+        service('image')
+            ->withFile($imageChemin)
+            ->fit(400, 400, 'center')
+            ->save($imageChemin);
+
+        $oldImage = $produit->image;
+        $produit->image = $image->getName();
+        $this->produitModel->save($produit);
+
+        $imageChemin = WRITEPATH . 'uploads/produits/' . $oldImage;
+
+        if (is_file($imageChemin)) {
+            unlink($imageChemin);
+        }
+        return redirect()->to(site_url("admin/produits/show/$produit->id"))->with('succes', 'La photo a bien été enregistré.');
+
     }
 
     public function enregistrer($id = null)
