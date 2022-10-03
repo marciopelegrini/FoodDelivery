@@ -101,6 +101,9 @@ class Produits extends BaseController
         if ($width < "400" || $height < "400") {
             return redirect()->back()->with("error", "La photo doit être plus grande que 400x400 px");
         }
+
+        $imageChemin = $photo->store('produits');
+
         dd($photo);
     }
 
